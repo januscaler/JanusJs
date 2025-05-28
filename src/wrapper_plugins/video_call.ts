@@ -49,7 +49,7 @@ export class JanusVideoCallPlugin extends JanusPlugin {
                 request: 'call',
                 username: username,
             },
-            jsep: offer.toJSON(),
+            jsep: offer,
         })
     }
 }

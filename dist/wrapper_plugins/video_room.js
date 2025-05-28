@@ -34,12 +34,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -66,10 +66,10 @@ var JanusVideoRoomPlugin = /** @class */ (function (_super) {
     function JanusVideoRoomPlugin(instance, session, handle, controllers) {
         return _super.call(this, instance, session, handle, controllers) || this;
     }
-    JanusVideoRoomPlugin.prototype.createRoom = function (options) {
-        if (options === void 0) { options = {}; }
-        return __awaiter(this, void 0, void 0, function () {
+    JanusVideoRoomPlugin.prototype.createRoom = function () {
+        return __awaiter(this, arguments, void 0, function (options) {
             var payload;
+            if (options === void 0) { options = {}; }
             return __generator(this, function (_a) {
                 payload = __assign({ request: 'create' }, options);
                 return [2 /*return*/, this.send({ message: payload })];
@@ -108,7 +108,7 @@ var JanusVideoRoomPlugin = /** @class */ (function (_super) {
                 payload = {
                     request: 'start',
                 };
-                return [2 /*return*/, this.send({ message: payload, jsep: answer.toJSON() })];
+                return [2 /*return*/, this.send({ message: payload, jsep: answer })];
             });
         });
     };
@@ -117,7 +117,7 @@ var JanusVideoRoomPlugin = /** @class */ (function (_super) {
             var payload;
             return __generator(this, function (_a) {
                 payload = __assign({ request: 'publish' }, options);
-                return [2 /*return*/, this.send({ message: payload, jsep: offer.toJSON() })];
+                return [2 /*return*/, this.send({ message: payload, jsep: offer })];
             });
         });
     };
@@ -133,10 +133,10 @@ var JanusVideoRoomPlugin = /** @class */ (function (_super) {
         });
     };
     JanusVideoRoomPlugin.prototype.updateAsSubscriber = function (_a) {
-        var subscribe = _a.subscribe, unsubscribe = _a.unsubscribe;
-        return __awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, arguments, void 0, function (_b) {
             var payload;
-            return __generator(this, function (_b) {
+            var subscribe = _b.subscribe, unsubscribe = _b.unsubscribe;
+            return __generator(this, function (_c) {
                 payload = {
                     request: 'update',
                     subscribe: subscribe,

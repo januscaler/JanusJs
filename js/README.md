@@ -1,4 +1,5 @@
-# Janus WebRTC Server (janus.js)
+Janus WebRTC Server (janus.js)
+==============================
 
 This is the npm version of `janus.js`, a JavaScript library to talk to the [Janus WebRTC Server](https://github.com/meetecho/janus-gateway). This is the only authorized version of `janus.js` on npm:
 

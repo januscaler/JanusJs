@@ -39,7 +39,7 @@ handle2.onMessage.subscribe(async ({ message, jsep }) => {
         const answer = await handle2.createAnswer({ jsep })
         await handle2.send({
             message: { request: 'start' },
-            jsep: answer.toJSON(),
+            jsep: answer,
         })
     }
 })

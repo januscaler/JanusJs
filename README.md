@@ -11,7 +11,7 @@ npm install typed_janus_js
 ## Build for distribution
 
 ```sh
-./build_janus.sh
+npm run update # update janusjs from meetecho
 npm run build
 ```
 

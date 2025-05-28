@@ -42,7 +42,7 @@ export declare class JanusPlugin implements PluginHandle {
     }>;
     get onStatReports(): import("rxjs").Observable<any[]>;
     get onMessage(): import("rxjs").Observable<{
-        message: any;
+        message: import("./interfaces/janus").MessageCallback | any;
         jsep: JSEP;
     }>;
     get onLocalTrack(): import("rxjs").Observable<{
@@ -67,7 +67,7 @@ export declare class JanusPlugin implements PluginHandle {
         mid: string;
     }>;
     get onWebRTCState(): import("rxjs").Observable<boolean>;
-    get onIceState(): import("rxjs").Observable<"failed" | "closed" | "connected" | "disconnected">;
+    get onIceState(): import("rxjs").Observable<"connected" | "failed" | "disconnected" | "closed">;
     get onDataOpen(): import("rxjs").Observable<void>;
     get onDetached(): import("rxjs").Observable<void>;
     get onCleanup(): import("rxjs").Observable<void>;

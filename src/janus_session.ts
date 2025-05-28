@@ -1,13 +1,7 @@
 import { Subject } from 'rxjs'
-import Janus from '../js/janus'
+import Janus, { JanusJS } from '../js/janus'
 import _ from 'lodash'
-import {
-    Controllers,
-    DestroyOptions,
-    JSEP,
-    PluginHandle,
-    PluginOptions,
-} from './interfaces/janus'
+import { Controllers } from './interfaces/janus'
 import { JanusPlugin } from './janus_plugin'
 import { BehaviorSubject } from 'rxjs'
 
@@ -29,9 +23,9 @@ export class JanusSession {
         return this.instance.getSessionId()
     }
     private getObservableControllers(
-        options: Pick<PluginOptions, 'plugin' | 'opaqueId'>
+        options: Pick<JanusJS.PluginOptions, 'plugin' | 'opaqueId'>
     ) {
-        const finalOptions: PluginOptions = { ...options }
+        const finalOptions: JanusJS.PluginOptions = { ...options }
         const controllers: Controllers = {
             onRecordingDataController: new Subject(),
             onStatReportsController: new Subject(),
@@ -48,7 +42,7 @@ export class JanusSession {
             onDataOpenController: new BehaviorSubject(null),
             onDetachedController: new BehaviorSubject(null),
         }
-        finalOptions.onmessage = (message: any, jsep: JSEP) => {
+        finalOptions.onmessage = (message: any, jsep: JanusJS.JSEP) => {
             controllers.onMessageController.next({ message, jsep })
         }
         finalOptions.onlocaltrack = (track, on) => {
@@ -92,16 +86,16 @@ export class JanusSession {
     }
     attach<T extends JanusPlugin>(
         classToCreate: new (...args: any) => T,
-        options: Pick<PluginOptions, 'opaqueId'>
+        options: Pick<JanusJS.PluginOptions, 'opaqueId'>
     ): Promise<T> {
-        const opts: Pick<PluginOptions, 'plugin' | 'opaqueId'> = {
+        const opts: Pick<JanusJS.PluginOptions, 'plugin' | 'opaqueId'> = {
             ...options,
             plugin: (classToCreate as any).identifier,
         }
         const { controllers, finalOptions } =
             this.getObservableControllers(opts)
         return new Promise<T>((resolve, reject) => {
-            finalOptions.success = (plugin: PluginHandle) => {
+            finalOptions.success = (plugin: JanusJS.PluginHandle) => {
                 const pluginHandle = new (classToCreate as any)(
                     this.instance,
                     this,
@@ -151,7 +145,7 @@ export class JanusSession {
         })
     }
     async destroy(
-        callbacks: Omit<DestroyOptions, 'success' | 'error'>
+        callbacks: Omit<JanusJS.DestroyOptions, 'success' | 'error'>
     ): Promise<void> {
         return new Promise((resolve, reject) => {
             this.instance.destroy({

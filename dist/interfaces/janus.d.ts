@@ -20,7 +20,7 @@ export interface DependenciesResult {
     extension: ChromeExtension;
     httpAPICall: (url: string, options: HttpApiCallOption) => void;
 }
-declare type ChromeExtension = {
+type ChromeExtension = {
     cache?: {
         [key in string]: GetScreenCallback;
     };
@@ -29,8 +29,8 @@ declare type ChromeExtension = {
     getScreen: (callback: GetScreenCallback) => void;
     init: () => void;
 };
-declare type GetScreenCallback = (error?: any, sourceId?: any) => void;
-declare type HttpApiCallOption = {
+type GetScreenCallback = (error?: any, sourceId?: any) => void;
+type HttpApiCallOption = {
     async: boolean;
     verb: string;
     body: JanusRequest;
@@ -39,7 +39,7 @@ declare type HttpApiCallOption = {
     success: (result: unknown) => void;
     error: (error: string, reason?: unknown) => void;
 };
-declare type JanusRequest = {
+type JanusRequest = {
     plugin?: string;
     token?: string;
     apisecret?: string;
@@ -187,7 +187,7 @@ export interface WebRTCInfo {
     insertableStreams?: any;
     candidates: RTCIceCandidateInit[];
 }
-export declare type PluginCreateAnswerParam = {
+export type PluginCreateAnswerParam = {
     jsep: JSEP;
     tracks?: TrackOption[];
     /** @deprecated use tracks instead */
@@ -198,17 +198,17 @@ export declare type PluginCreateAnswerParam = {
     success?: (data: JSEP) => void;
     error?: (error: string) => void;
 };
-export declare type PluginHandleRemoteJsepParam = {
+export type PluginHandleRemoteJsepParam = {
     jsep: JSEP;
     success?: (data: JSEP) => void;
     error?: (error: string) => void;
 };
-export declare type PluginReplaceTracksParam = {
+export type PluginReplaceTracksParam = {
     tracks: TrackOption[];
     success?: (data: unknown) => void;
     error?: (error: string) => void;
 };
-export declare type TrackOption = {
+export type TrackOption = {
     add?: boolean;
     replace?: boolean;
     remove?: boolean;
@@ -234,22 +234,22 @@ export declare type TrackOption = {
         receiver: ReadableWritablePair;
     };
 };
-export declare type PluginDtmfParam = {
+export type PluginDtmfParam = {
     dtmf: Dtmf;
     success?: (data: unknown) => void;
     error?: (error: string) => void;
 };
-export declare type Dtmf = {
+export type Dtmf = {
     tones: string;
     duration: number;
     gap: number;
 };
-export declare type PluginDataParam = {
+export type PluginDataParam = {
     success?: (data: unknown) => void;
     error?: (error: string) => void;
     text: string;
 };
-export declare type TrackDesc = {
+export type TrackDesc = {
     mid?: string;
     type?: string;
     id?: string;

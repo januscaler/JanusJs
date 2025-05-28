@@ -95,7 +95,7 @@ export class JanusSipPlugin extends JanusPlugin {
         const payload = {
             request: 'update',
         }
-        await this.send({ message: payload, jsep: offer.toJSON() })
+        await this.send({ message: payload, jsep: offer })
     }
     async decline(code?: number, headers?: any) {
         const payload = {

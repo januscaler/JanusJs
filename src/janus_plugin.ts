@@ -11,7 +11,6 @@ import Janus, {
     PluginReplaceTracksParam,
     TrackDesc,
     DataParams,
-    TrackOption,
 } from './interfaces/janus'
 import { JanusJs } from './janus_js'
 import { JanusSession } from './janus_session'

@@ -81,7 +81,7 @@ export class JanusVideoRoomPlugin extends JanusPlugin {
         const payload = {
             request: 'start',
         }
-        return this.send({ message: payload, jsep: answer.toJSON() })
+        return this.send({ message: payload, jsep: answer })
     }
 
     async publishAsPublisher(
@@ -102,7 +102,7 @@ export class JanusVideoRoomPlugin extends JanusPlugin {
             request: 'publish',
             ...options,
         }
-        return this.send({ message: payload, jsep: offer.toJSON() })
+        return this.send({ message: payload, jsep: offer })
     }
     async unpublishAsPublisher(): Promise<any> {
         const payload = {
