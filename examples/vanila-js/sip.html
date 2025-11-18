@@ -1,13 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Sip Demo</title>
-    </head>
-    <body>
-        <div id="app"></div>
-        <script type="module" src="./js/sip.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sip Demo</title>
+</head>
+
+<body>
+    <div id="app">
+        <section class="card">
+            <h1>SIP demo</h1>
+            <p class="subtle">
+                Register to a SIP proxy and manage calls (dial, answer,
+                hold, transfer, record) using the Janus SIP plugin.
+            </p>
+            <div class="grid two">
+                <div class="grid">
+                    <label>
+                        SIP server
+                        <input id="sip-server" type="text" placeholder="sip.example.com" />
+                    </label>
+                    <label>
+                        Username
+                        <input id="sip-username" type="text" />
+                    </label>
+                    <label>
+                        Password
+                        <input id="sip-secret" type="password" />
+                    </label>
+                    <label>
+                        Display name
+                        <input id="sip-display" type="text" />
+                    </label>
+                </div>
+                <div class="grid">
+                    <div class="status" id="sip-status"></div>
+                    <div class="inline-actions">
+                        <button id="sip-connect">Connect</button>
+                        <button id="sip-register" disabled>Register</button>
+                        <button id="sip-unregister" class="secondary" disabled>
+                            Unregister
+                        </button>
+                    </div>
+                    <label>
+                        Destination URI
+                        <input id="sip-destination" type="text" placeholder="sip:user@domain" />
+                    </label>
+                    <div class="inline-actions">
+                        <button id="sip-call" disabled>Call</button>
+                        <button id="sip-hangup" class="secondary" disabled>Hangup</button>
+                    </div>
+                    <div class="inline-actions">
+                        <button id="sip-hold" class="secondary" disabled>Toggle hold</button>
+                        <button id="sip-record" class="secondary" disabled>Toggle recording</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Call status</h2>
+            <div class="media-pane">
+                <audio id="sip-remote" controls autoplay></audio>
+            </div>
+            <div class="log" id="sip-call-log"></div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Log</h2>
+            <div id="sip-log" class="log"></div>
+        </section>
+    </div>
+    <script type="module" src="./js/sip.js"></script>
+</body>
+
 </html>

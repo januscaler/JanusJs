@@ -132,7 +132,7 @@ var JanusSipPlugin = /** @class */ (function (_super) {
                         payload = {
                             request: 'update',
                         };
-                        return [4 /*yield*/, this.send({ message: payload, jsep: offer.toJSON() })];
+                        return [4 /*yield*/, this.send({ message: payload, jsep: offer })];
                     case 3:
                         _a.sent();
                         return [2 /*return*/];

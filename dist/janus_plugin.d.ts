@@ -34,7 +34,7 @@ export declare class JanusPlugin implements PluginHandle {
     recordingTimeSlice?: number;
     protected handleRecordingSetup(controllers: Controllers): void;
     sendTrickle(): Promise<void>;
-    protected handleStatsHook(plugin: PluginHandle, controllers: Controllers, mediaStreamTrack?: MediaStreamTrack): number;
+    protected handleStatsHook(plugin: PluginHandle, controllers: Controllers, mediaStreamTrack?: MediaStreamTrack): NodeJS.Timeout;
     get recorder(): MediaRecorder;
     get onRecordingData(): import("rxjs").Observable<{
         blob: Blob;

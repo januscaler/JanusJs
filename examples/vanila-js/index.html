@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>JanusJs Test</title>
-    </head>
-    <body>
-        <div id="app">
-            <a href="./videoroom.html">VideoRoom Demo</a>
-            <a href="./sip.html">Sip Demo</a>
-            <a href="./screensharecall.html">screensharecall</a>
-            <a href="./streaming.html">streaming</a>
-            <a href="./audiobridge.html">audiobridge</a>
-        </div>
-        <script type="module" src="/main.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JanusJs Test</title>
+</head>
+
+<body>
+    <div id="app">
+        <header class="card">
+            <h1>JanusJs Vanilla Demos</h1>
+            <p class="subtle">
+                Feature-complete walk-throughs for the Janus plugins bundled
+                with <code>typed_janus_js</code>. Use these pages to verify
+                WebRTC flows without relying on the legacy Janus demo UI.
+            </p>
+        </header>
+        <section class="card">
+            <h2 class="section-title">Available demos</h2>
+            <div class="grid three">
+                <a data-demo href="./videoroom.html" class="card">
+                    <strong>VideoRoom</strong>
+                    <span class="subtle">Publish, subscribe and manage feeds.</span>
+                </a>
+                <a data-demo href="./audiobridge.html" class="card">
+                    <strong>AudioBridge</strong>
+                    <span class="subtle">Spatial audio, chat and participant controls.</span>
+                </a>
+                <a data-demo href="./streaming.html" class="card">
+                    <strong>Streaming</strong>
+                    <span class="subtle">Watch and control live relays.</span>
+                </a>
+                <a data-demo href="./sip.html" class="card">
+                    <strong>SIP</strong>
+                    <span class="subtle">Softphone with call management.</span>
+                </a>
+                <a data-demo href="./screensharecall.html" class="card">
+                    <strong>Video Call</strong>
+                    <span class="subtle">Direct call, screen-share and call controls.</span>
+                </a>
+            </div>
+        </section>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+
 </html>

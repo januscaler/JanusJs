@@ -8180,7 +8180,7 @@
     function requireLodash () {
     	if (hasRequiredLodash) return lodash$1.exports;
     	hasRequiredLodash = 1;
-    	(function (module, exports) {
+    	(function (module, exports$1) {
     (function() {
 
     		  /** Used as a safe reference for `undefined` in pre-ES5 environments. */
@@ -8611,7 +8611,7 @@
     		  var root = freeGlobal || freeSelf || Function('return this')();
 
     		  /** Detect free variable `exports`. */
-    		  var freeExports = exports && !exports.nodeType && exports;
+    		  var freeExports = exports$1 && !exports$1.nodeType && exports$1;
 
     		  /** Detect free variable `module`. */
     		  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -12471,7 +12471,7 @@
     		        return symbolToString ? symbolToString.call(value) : '';
     		      }
     		      var result = (value + '');
-    		      return (result == '0' && (1 / value) == -Infinity) ? '-0' : result;
+    		      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
     		    }
 
     		    /**
@@ -14994,7 +14994,7 @@
     		        return value;
     		      }
     		      var result = (value + '');
-    		      return (result == '0' && (1 / value) == -Infinity) ? '-0' : result;
+    		      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
     		    }
 
     		    /**
@@ -20336,7 +20336,7 @@
     		     * // => false
     		     */
     		    function isSafeInteger(value) {
-    		      return isInteger(value) && value >= -9007199254740991 && value <= MAX_SAFE_INTEGER;
+    		      return isInteger(value) && value >= -MAX_SAFE_INTEGER && value <= MAX_SAFE_INTEGER;
     		    }
 
     		    /**
@@ -20603,7 +20603,7 @@
     		        return value === 0 ? value : 0;
     		      }
     		      value = toNumber(value);
-    		      if (value === INFINITY || value === -Infinity) {
+    		      if (value === INFINITY || value === -INFINITY) {
     		        var sign = (value < 0 ? -1 : 1);
     		        return sign * MAX_INTEGER;
     		      }
@@ -20772,7 +20772,7 @@
     		     */
     		    function toSafeInteger(value) {
     		      return value
-    		        ? baseClamp(toInteger(value), -9007199254740991, MAX_SAFE_INTEGER)
+    		        ? baseClamp(toInteger(value), -MAX_SAFE_INTEGER, MAX_SAFE_INTEGER)
     		        : (value === 0 ? value : 0);
     		    }
 
@@ -26181,7 +26181,7 @@
                                     request: 'call',
                                     username: username,
                                 },
-                                jsep: offer.toJSON(),
+                                jsep: offer,
                             })];
                         case 3:
                             _a.sent();
@@ -26299,7 +26299,7 @@
                             payload = {
                                 request: 'update',
                             };
-                            return [4 /*yield*/, this.send({ message: payload, jsep: offer.toJSON() })];
+                            return [4 /*yield*/, this.send({ message: payload, jsep: offer })];
                         case 3:
                             _a.sent();
                             return [2 /*return*/];

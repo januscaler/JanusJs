@@ -104,7 +104,7 @@ var JanusVideoCallPlugin = /** @class */ (function (_super) {
                                 request: 'call',
                                 username: username,
                             },
-                            jsep: offer.toJSON(),
+                            jsep: offer,
                         })];
                     case 3:
                         _a.sent();

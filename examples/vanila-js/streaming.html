@@ -1,16 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>streaming Demo</title>
-    </head>
-    <body>
-        <div id="app">
-            <audio controls autoplay id="remoteAudio"></audio>
-            <div style="display: none" id="audios"></div>
-        </div>
-        <script type="module" src="./js/streaming.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>streaming Demo</title>
+</head>
+
+<body>
+    <div id="app">
+        <section class="card">
+            <h1>Streaming demo</h1>
+            <p class="subtle">
+                Browse and watch relayed streams, toggle audio/video tracks
+                and switch between available mounts.
+            </p>
+            <div class="grid two">
+                <div class="grid">
+                    <label>
+                        Server URL
+                        <input id="st-server" type="text" />
+                    </label>
+                    <label>
+                        Mount ID
+                        <input id="st-mount" type="number" />
+                    </label>
+                </div>
+                <div class="grid">
+                    <div class="status" id="st-status"></div>
+                    <div class="inline-actions">
+                        <button id="st-connect">Connect</button>
+                        <button id="st-watch" disabled>Watch</button>
+                        <button id="st-stop" class="secondary" disabled>Stop</button>
+                        <button id="st-refresh" class="secondary" disabled>Refresh list</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Available mounts</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="st-mounts"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Remote media</h2>
+            <div class="media-pane">
+                <video id="st-remote-video" controls autoplay muted></video>
+                <audio id="st-remote-audio" controls autoplay></audio>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Log</h2>
+            <div id="st-log" class="log"></div>
+        </section>
+    </div>
+    <script type="module" src="./js/streaming.js"></script>
+</body>
+
 </html>

@@ -1,12 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
-        <script type="module" src="./js/audiobridge.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <section class="card">
+            <h1>AudioBridge demo</h1>
+            <p class="subtle">
+                Join an audio mixing room, manage talkers, publish chat
+                messages and monitor active speakers. Inspired by the
+                Janus <code>audiobridge.js</code> reference implementation.
+            </p>
+            <div class="grid two">
+                <div class="grid">
+                    <label>
+                        Server URL
+                        <input id="ab-server" type="text" />
+                    </label>
+                    <label>
+                        Room ID
+                        <input id="ab-room" type="number" />
+                    </label>
+                    <label>
+                        Display name
+                        <input id="ab-display" type="text" />
+                    </label>
+                    <label>
+                        Spatial position
+                        <input id="ab-position" type="range" min="-10" max="10" value="0" />
+                    </label>
+                </div>
+                <div class="grid">
+                    <div class="status" id="ab-status"></div>
+                    <div class="inline-actions">
+                        <button id="ab-connect">Connect</button>
+                        <button id="ab-join" disabled>Join</button>
+                        <button id="ab-leave" class="secondary" disabled>
+                            Leave
+                        </button>
+                    </div>
+                    <div class="inline-actions">
+                        <button id="ab-mute" class="secondary" disabled>
+                            Mute self
+                        </button>
+                        <button id="ab-speaker" class="secondary" disabled>
+                            Toggle speaker
+                        </button>
+                    </div>
+                    <label>
+                        Output volume
+                        <input id="ab-volume" type="range" min="0" max="100" value="70" />
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Participants</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Streams</th>
+                    </tr>
+                </thead>
+                <tbody id="ab-participants"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Chat</h2>
+            <div class="grid">
+                <div id="ab-chat-log" class="log"></div>
+                <div class="flex">
+                    <input id="ab-chat-input" type="text" class="stretch" placeholder="Send a message" />
+                    <button id="ab-chat-send" disabled>Send</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Audio monitor</h2>
+            <div class="media-pane">
+                <audio id="ab-remote" autoplay controls></audio>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Log</h2>
+            <div id="ab-log" class="log"></div>
+        </section>
+    </div>
+    <script type="module" src="./js/audiobridge.js"></script>
+</body>
+
 </html>
