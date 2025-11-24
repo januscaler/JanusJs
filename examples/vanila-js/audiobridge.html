@@ -2,103 +2,234 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Janus Audio Bridge Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/8.2.3/adapter.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-MrU2x2d9j9l56k97X3CJidb8sRP/GRZXmlDYrpQM77+c0onL1kKM3nOy0jhsMMGasZWdfwa0lrlDyVK+kjr7SQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/demo.css" />
+    <style>
+        body {
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 55%), #020617;
+            color: #f8fafc;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            letter-spacing: 0.01em;
+        }
+
+        .bg-info {
+            background-color: #0ea5e9;
+            color: #f8fafc;
+        }
+
+        .bg-success {
+            background-color: #22c55e;
+            color: #052e16;
+        }
+
+        .bg-warning {
+            background-color: #facc15;
+            color: #111827;
+        }
+
+        .bg-danger {
+            background-color: #ef4444;
+            color: #f8fafc;
+        }
+
+        .bg-secondary {
+            background-color: #475569;
+            color: #f8fafc;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 18px -12px rgba(15, 23, 42, 0.65);
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: #f8fafc;
+        }
+
+        .btn-secondary {
+            background-color: #1f2937;
+            color: #f8fafc;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: #f8fafc;
+        }
+
+        .btn-info {
+            background-color: #0ea5e9;
+            color: #f8fafc;
+        }
+
+        .btn-success {
+            background-color: #22c55e;
+            color: #052e16;
+        }
+
+        .panel {
+            backdrop-filter: blur(18px);
+            background-color: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(100, 116, 139, 0.25);
+            border-radius: 1rem;
+            box-shadow: 0 24px 45px -25px rgba(2, 6, 23, 0.8);
+        }
+
+        .panel-header {
+            padding: 1.25rem 1.5rem 0.75rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        }
+
+        .panel-body {
+            padding: 1.5rem;
+        }
+    </style>
 </head>
 
-<body>
-    <div id="app">
-        <section class="card">
-            <h1>AudioBridge demo</h1>
-            <p class="subtle">
-                Join an audio mixing room, manage talkers, publish chat
-                messages and monitor active speakers. Inspired by the
-                Janus <code>audiobridge.js</code> reference implementation.
-            </p>
-            <div class="grid two">
-                <div class="grid">
-                    <label>
-                        Server URL
-                        <input id="ab-server" type="text" />
-                    </label>
-                    <label>
-                        Room ID
-                        <input id="ab-room" type="number" />
-                    </label>
-                    <label>
-                        Display name
-                        <input id="ab-display" type="text" />
-                    </label>
-                    <label>
-                        Spatial position
-                        <input id="ab-position" type="range" min="-10" max="10" value="0" />
-                    </label>
+<body class="min-h-screen">
+    <a class="fixed top-3 left-3 z-50 inline-flex items-center gap-2 rounded-full bg-sky-600/90 px-3 py-1 text-xs font-semibold tracking-wide text-white shadow-lg shadow-sky-900/50 transition hover:bg-sky-500"
+        href="https://github.com/meetecho/janus-gateway" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-github"></i>
+        Contribute on GitHub
+    </a>
+
+    <main class="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 lg:px-8">
+        <header class="panel">
+            <div class="panel-body flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div class="space-y-2">
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Plugin Demo</p>
+                    <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">
+                        Audio Bridge (Mixed Contributions)
+                    </h1>
+                    <p class="max-w-2xl text-sm text-slate-300">
+                        Connect to a Janus AudioBridge room, publish your microphone, and manage spatial audio, mute,
+                        and suspension controls for every participant.
+                    </p>
                 </div>
-                <div class="grid">
-                    <div class="status" id="ab-status"></div>
-                    <div class="inline-actions">
-                        <button id="ab-connect">Connect</button>
-                        <button id="ab-join" disabled>Join</button>
-                        <button id="ab-leave" class="secondary" disabled>
-                            Leave
+                <button id="start" class="btn btn-secondary text-base shadow-lg shadow-slate-900/60">
+                    Start
+                </button>
+            </div>
+        </header>
+
+        <section id="details" class="panel">
+            <div class="panel-body space-y-6">
+                <div class="rounded-2xl bg-sky-600/20 p-4 text-sky-100">
+                    Want to learn more about the <strong class="font-semibold text-sky-200">AudioBridge</strong> plugin?
+                    Explore the
+                    <a href="https://janus.conf.meetecho.com/docs/audiobridge" target="_blank" rel="noreferrer"
+                        class="font-medium text-sky-300 underline decoration-sky-500/60 underline-offset-4 hover:text-sky-200">official
+                        documentation</a>.
+                </div>
+                <div class="space-y-4 text-sm leading-relaxed text-slate-200">
+                    <p>
+                        The AudioBridge demo showcases a fully mixed audio-room experience using the Janus Gateway. Once
+                        you join, Janus mixes every contribution so your browser only needs a single PeerConnection
+                        regardless of how many peers participate.
+                    </p>
+                    <p>
+                        Provide a display name to enter the default room, publish your microphone, and keep track of
+                        everyone else in real time. Participant rows highlight mute status, suspended feeds, and
+                        advertised spatial positions.
+                    </p>
+                    <p>
+                        Press <code class="rounded bg-slate-800/70 px-1 py-0.5 text-xs text-sky-300">Start</code> to
+                        connect to your configured gateway and begin the session.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="audiojoin" class="panel hide">
+            <div class="panel-body space-y-4">
+                <div class="flex flex-wrap items-center gap-3">
+                    <span id="you" class="badge hide"></span>
+                    <span class="text-sm text-slate-300">Set your display name to join the audio bridge.</span>
+                </div>
+                <div id="controls" class="w-full">
+                    <form id="registernow" class="hide flex flex-col gap-3 md:flex-row" autocomplete="off">
+                        <label
+                            class="flex w-full items-center gap-3 rounded-xl border border-slate-700/60 bg-slate-900/70 px-4 py-3 shadow-inner shadow-slate-950/50 transition focus-within:border-sky-500">
+                            <i class="fa-solid fa-user text-slate-400"></i>
+                            <input id="username"
+                                class="w-full bg-transparent text-base text-white outline-none placeholder:text-slate-500"
+                                type="text" placeholder="Choose a display name" autocomplete="off"
+                                onkeypress="return checkEnter(this, event);" />
+                        </label>
+                        <button type="button" id="register" class="btn btn-success w-full md:w-auto">
+                            Join the room
                         </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="room" class="panel hide">
+            <div class="panel-body grid gap-6 lg:grid-cols-2">
+                <article class="panel">
+                    <div class="panel-header flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3 text-lg font-semibold text-white">
+                            Participants
+                            <span id="participant" class="badge hide"></span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button id="toggleaudio" class="btn btn-danger hide" type="button">Mute</button>
+                            <button id="position" class="btn btn-primary hide" type="button">Position</button>
+                            <button id="togglesuspend" class="btn btn-secondary hide" type="button">Suspend</button>
+                        </div>
                     </div>
-                    <div class="inline-actions">
-                        <button id="ab-mute" class="secondary" disabled>
-                            Mute self
-                        </button>
-                        <button id="ab-speaker" class="secondary" disabled>
-                            Toggle speaker
-                        </button>
+                    <div class="panel-body">
+                        <ul id="list" class="flex flex-col gap-3 text-sm">
+                            <!-- Participants rendered dynamically -->
+                        </ul>
                     </div>
-                    <label>
-                        Output volume
-                        <input id="ab-volume" type="range" min="0" max="100" value="70" />
-                    </label>
-                </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-header text-lg font-semibold text-white">
+                        Mixed Audio Output
+                    </div>
+                    <div id="mixedaudio"
+                        class="panel-body flex flex-col items-center justify-center gap-4 text-sm text-slate-300">
+                        <p class="text-center text-slate-400">Publish to the room to start receiving mixed audio.</p>
+                    </div>
+                </article>
             </div>
         </section>
+    </main>
 
-        <section class="card">
-            <h2 class="section-title">Participants</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Streams</th>
-                    </tr>
-                </thead>
-                <tbody id="ab-participants"></tbody>
-            </table>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">Chat</h2>
-            <div class="grid">
-                <div id="ab-chat-log" class="log"></div>
-                <div class="flex">
-                    <input id="ab-chat-input" type="text" class="stretch" placeholder="Send a message" />
-                    <button id="ab-chat-send" disabled>Send</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">Audio monitor</h2>
-            <div class="media-pane">
-                <audio id="ab-remote" autoplay controls></audio>
-            </div>
-        </section>
-
-        <section class="card">
-            <h2 class="section-title">Log</h2>
-            <div id="ab-log" class="log"></div>
-        </section>
-    </div>
-    <script type="module" src="./js/audiobridge.js"></script>
+    <script type="module" src="./js/audiobridge.js" defer></script>
 </body>
 
 </html>
