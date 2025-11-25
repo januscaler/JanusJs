@@ -1,6 +1,6 @@
 {
     "name": "typed_janus_js",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "scalable and battle tested wrapper around janusjs providing typed and promisified version of janusjs",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",

@@ -494,7 +494,8 @@ const handleLocalTrack = ({ track, on }) => {
     }
 }
 
-const handleRemoteTrack = ({ track, on }) => {
+const handleRemoteTrack = ({ track, on, mid }) => {
+    console.log({ track, on, mid })
     if (!track || track.kind !== 'audio') return
     if (!on) {
         detachRemoteAudio()
