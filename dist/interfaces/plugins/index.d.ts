@@ -1,10 +1,10 @@
 export interface BasicMessageBody {
-    session_id: string;
-    handle_id: string;
+    session_id: string
+    handle_id: string
     body: {
-        request: string;
-    } & any;
-    transaction: string;
-    janus: 'message';
+        request: string
+    } & any
+    transaction: string
+    janus: 'message'
 }
 //# sourceMappingURL=index.d.ts.map

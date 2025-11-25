@@ -1,8 +1,12 @@
 <template>
     <div class="panel portable-bridge">
-        <header class="panel-header flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <header
+            class="panel-header flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div class="space-y-1">
-                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">Audio Bridge</p>
+                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">
+                    Audio Bridge
+                </p>
                 <h2 class="text-xl font-semibold text-white">
                     {{ displayNameLabel }}
                 </h2>
@@ -16,7 +20,9 @@
                     @click="handleToggleAudio"
                 >
                     <span v-if="connecting" class="flex items-center gap-2">
-                        <span class="inline-block h-3 w-3 animate-ping rounded-full bg-slate-200"></span>
+                        <span
+                            class="inline-block h-3 w-3 animate-ping rounded-full bg-slate-200"
+                        ></span>
                         Working…
                     </span>
                     <span v-else>{{ muteButtonLabel }}</span>
@@ -30,20 +36,32 @@
                         <span class="font-semibold text-white">Status:</span>
                         {{ statusMessage }}
                     </p>
-                    <p v-if="audioSuspended" class="text-xs text-amber-400">Audio suspended by the bridge.</p>
+                    <p v-if="audioSuspended" class="text-xs text-amber-400">
+                        Audio suspended by the bridge.
+                    </p>
                 </div>
-                <div v-if="spinnerVisible" class="flex items-center gap-2 text-xs text-slate-400">
-                    <span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-slate-600 border-t-white"></span>
+                <div
+                    v-if="spinnerVisible"
+                    class="flex items-center gap-2 text-xs text-slate-400"
+                >
+                    <span
+                        class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-slate-600 border-t-white"
+                    ></span>
                     Connecting…
                 </div>
             </div>
 
             <div class="space-y-3">
-                <div class="flex items-center justify-between text-xs uppercase tracking-wide text-slate-400">
+                <div
+                    class="flex items-center justify-between text-xs uppercase tracking-wide text-slate-400"
+                >
                     <span>Participants</span>
                     <span>{{ participants.length }}</span>
                 </div>
-                <ul v-if="participants.length" class="flex flex-col gap-3 text-sm">
+                <ul
+                    v-if="participants.length"
+                    class="flex flex-col gap-3 text-sm"
+                >
                     <li
                         v-for="participant in participants"
                         :key="participant.id"
@@ -59,11 +77,16 @@
                                 <p class="font-semibold text-white">
                                     {{ participantLabel(participant) }}
                                 </p>
-                                <p class="text-xs uppercase tracking-wide" :class="participantStatusClass(participant)">
+                                <p
+                                    class="text-xs uppercase tracking-wide"
+                                    :class="participantStatusClass(participant)"
+                                >
                                     {{ participantStatusText(participant) }}
                                 </p>
                             </div>
-                            <div class="flex items-center gap-3 text-base text-slate-300">
+                            <div
+                                class="flex items-center gap-3 text-base text-slate-300"
+                            >
                                 <i
                                     v-if="!participant.setup"
                                     class="fa-solid fa-link-slash text-amber-400"
@@ -88,7 +111,9 @@
                         </div>
                     </li>
                 </ul>
-                <p v-else class="text-sm text-slate-400">Waiting for participants…</p>
+                <p v-else class="text-sm text-slate-400">
+                    Waiting for participants…
+                </p>
             </div>
 
             <div class="space-y-2">
@@ -100,7 +125,8 @@
                     autoplay
                 ></audio>
                 <p class="text-xs text-slate-500">
-                    Mixed audio from the bridge plays here. Adjust the media element if browser blocks autoplay.
+                    Mixed audio from the bridge plays here. Adjust the media
+                    element if browser blocks autoplay.
                 </p>
             </div>
         </section>
@@ -109,8 +135,33 @@
 
 <script>
 import { JanusAudioBridgePlugin } from 'typed_janus_js'
-import { applyRemoteJsep, createJanusConnection, stopPluginWebrtc } from '../helpers/janus'
+const createJanusConnection = async ({ server, debug = false }) => {
+    const janus = new JanusJs({ server })
+    await janus.init({ debug })
+    const session = await janus.createSession()
+    return { janus, session }
+}
 
+const applyRemoteJsep = async (plugin, jsep) => {
+    if (!plugin || !jsep) return
+    await plugin.handleRemoteJsep({ jsep })
+}
+
+const stopPluginWebrtc = async (plugin) => {
+    if (!plugin) return
+    try {
+        if (typeof plugin.hangup === 'function') {
+            plugin.hangup(true)
+        }
+    } catch (error) {
+        console.warn('hangup failed', error)
+    }
+    try {
+        await plugin.detach()
+    } catch (error) {
+        console.warn('detach failed', error)
+    }
+}
 const parseBoolean = (value, fallback = false) => {
     if (typeof value === 'boolean') return value
     if (typeof value === 'string') {
@@ -206,7 +257,9 @@ export default {
                     const playPromise = audio.play?.()
                     if (playPromise && typeof playPromise.then === 'function') {
                         playPromise.catch(() => {
-                            console.warn('User interaction is required to play remote audio')
+                            console.warn(
+                                'User interaction is required to play remote audio'
+                            )
                         })
                     }
                 } else {
@@ -279,10 +332,18 @@ export default {
                 this.session = session
                 this.plugin = await session.attach(JanusAudioBridgePlugin)
 
-                this.trackSubscription(this.plugin.onMessage.subscribe(this.handlePluginMessage))
-                this.trackSubscription(this.plugin.onRemoteTrack.subscribe(this.handleRemoteTrack))
-                this.trackSubscription(this.plugin.onLocalTrack.subscribe(this.handleLocalTrack))
-                this.trackSubscription(this.plugin.onCleanup.subscribe(this.handlePluginCleanup))
+                this.trackSubscription(
+                    this.plugin.onMessage.subscribe(this.handlePluginMessage)
+                )
+                this.trackSubscription(
+                    this.plugin.onRemoteTrack.subscribe(this.handleRemoteTrack)
+                )
+                this.trackSubscription(
+                    this.plugin.onLocalTrack.subscribe(this.handleLocalTrack)
+                )
+                this.trackSubscription(
+                    this.plugin.onCleanup.subscribe(this.handlePluginCleanup)
+                )
 
                 this.resetParticipants()
                 this.statusMessage = 'Joining room…'
@@ -290,7 +351,10 @@ export default {
                 const payload = {
                     display: this.displayName,
                 }
-                if (this.audioCodec && ['opus', 'pcmu', 'pcma'].includes(this.audioCodec)) {
+                if (
+                    this.audioCodec &&
+                    ['opus', 'pcmu', 'pcma'].includes(this.audioCodec)
+                ) {
                     payload.codec = this.audioCodec
                 }
                 if (this.group) {
@@ -368,7 +432,9 @@ export default {
         },
         participantLabel(participant) {
             const display = participant.display || `User ${participant.id}`
-            return participant.id === this.participantId ? `${display} (you)` : display
+            return participant.id === this.participantId
+                ? `${display} (you)`
+                : display
         },
         participantStatusText(participant) {
             if (participant.suspended) return 'Suspended'
@@ -394,10 +460,22 @@ export default {
                 this.participantMap.set(id, {
                     id,
                     display: participant.display ?? existing.display ?? null,
-                    setup: parseBoolean(participant.setup, existing.setup ?? true),
-                    muted: parseBoolean(participant.muted, existing.muted ?? false),
-                    talking: parseBoolean(participant.talking, existing.talking ?? false),
-                    suspended: parseBoolean(participant.suspended, existing.suspended ?? false),
+                    setup: parseBoolean(
+                        participant.setup,
+                        existing.setup ?? true
+                    ),
+                    muted: parseBoolean(
+                        participant.muted,
+                        existing.muted ?? false
+                    ),
+                    talking: parseBoolean(
+                        participant.talking,
+                        existing.talking ?? false
+                    ),
+                    suspended: parseBoolean(
+                        participant.suspended,
+                        existing.suspended ?? false
+                    ),
                 })
             })
             this.refreshParticipants()
@@ -441,7 +519,9 @@ export default {
         handleAudioBridgeRoomChanged(message) {
             this.activeRoom = message.room ?? this.normalizedRoom
             this.participantId = normalizeId(message.id)
-            this.handleParticipantsList(message.participants || [], { replace: true })
+            this.handleParticipantsList(message.participants || [], {
+                replace: true,
+            })
         },
         handleAudioBridgeEvent(message) {
             if (Array.isArray(message.participants)) {
@@ -467,7 +547,10 @@ export default {
                 if (suspendedId !== null && suspendedId !== 'ok') {
                     const record = this.participantMap.get(suspendedId)
                     if (record) {
-                        this.participantMap.set(suspendedId, { ...record, suspended: true })
+                        this.participantMap.set(suspendedId, {
+                            ...record,
+                            suspended: true,
+                        })
                         this.refreshParticipants()
                     }
                 }
@@ -475,7 +558,9 @@ export default {
             if (message.resumed === true) {
                 this.audioSuspended = false
                 if (Array.isArray(message.participants)) {
-                    this.handleParticipantsList(message.participants, { replace: true })
+                    this.handleParticipantsList(message.participants, {
+                        replace: true,
+                    })
                 }
             } else if (message.resumed != null) {
                 const resumedId = normalizeId(message.resumed)
@@ -485,7 +570,10 @@ export default {
                 if (resumedId !== null && resumedId !== 'ok') {
                     const record = this.participantMap.get(resumedId)
                     if (record) {
-                        this.participantMap.set(resumedId, { ...record, suspended: false })
+                        this.participantMap.set(resumedId, {
+                            ...record,
+                            suspended: false,
+                        })
                         this.refreshParticipants()
                     }
                 }
@@ -499,9 +587,19 @@ export default {
                 let offer = await this.plugin.createOffer({
                     tracks: [{ type: 'audio', capture: true, recv: true }],
                 })
-                if (this.stereo && offer?.sdp && !offer.sdp.includes('stereo=1')) {
-                    const updatedSdp = offer.sdp.replace(/useinbandfec=1/g, 'useinbandfec=1;stereo=1')
-                    offer = new RTCSessionDescription({ type: offer.type, sdp: updatedSdp })
+                if (
+                    this.stereo &&
+                    offer?.sdp &&
+                    !offer.sdp.includes('stereo=1')
+                ) {
+                    const updatedSdp = offer.sdp.replace(
+                        /useinbandfec=1/g,
+                        'useinbandfec=1;stereo=1'
+                    )
+                    offer = new RTCSessionDescription({
+                        type: offer.type,
+                        sdp: updatedSdp,
+                    })
                 }
                 await this.plugin.configure({
                     offer,
@@ -528,7 +626,8 @@ export default {
             if (!on) {
                 if (this.remoteStream) {
                     const current = this.remoteStream
-                    current.getAudioTracks()
+                    current
+                        .getAudioTracks()
                         .filter((t) => t.id === track.id)
                         .forEach((t) => current.removeTrack(t))
                     if (!current.getAudioTracks().length) {
@@ -540,7 +639,9 @@ export default {
             }
             this.spinnerVisible = false
             const stream = this.remoteStream || new MediaStream()
-            stream.getAudioTracks().forEach((existing) => stream.removeTrack(existing))
+            stream
+                .getAudioTracks()
+                .forEach((existing) => stream.removeTrack(existing))
             stream.addTrack(track)
             this.remoteStream = stream
             this.audioEnabled = true
@@ -560,7 +661,9 @@ export default {
             try {
                 this.audioEnabled = !this.audioEnabled
                 await this.plugin.configure({ muted: !this.audioEnabled })
-                this.statusMessage = this.audioEnabled ? 'Audio unmuted' : 'Audio muted'
+                this.statusMessage = this.audioEnabled
+                    ? 'Audio unmuted'
+                    : 'Audio muted'
             } catch (error) {
                 console.error('Failed to toggle audio', error)
                 this.statusMessage = 'Audio toggle failed'
@@ -597,7 +700,9 @@ export default {
     font-weight: 600;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     background-color: #1f2937;
     color: #f8fafc;
 }

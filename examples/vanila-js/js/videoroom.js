@@ -54,7 +54,8 @@ const vrState = {
     privateId: null,
 }
 
-const vrLog = (message, level = 'info') => appendLogLine(vrElements.log, message, { level })
+const vrLog = (message, level = 'info') =>
+    appendLogLine(vrElements.log, message, { level })
 const vrSetStatus = (message) => setText(vrElements.status, message)
 const vrGetMaxSubscribers = () =>
     Number(vrElements.maxSubscribers?.value || 0) || vrDefaults.maxSubscribers
@@ -119,9 +120,10 @@ const vrRenderParticipants = () => {
             publisher.display || `${isOwnFeed ? 'You' : 'Feed'} ${publisher.id}`
 
         const streamsCell = document.createElement('td')
-        streamsCell.textContent = (publisher.streams || [])
-            .map((stream) => `${stream.type} (${stream.mid})`)
-            .join(', ') || 'n/a'
+        streamsCell.textContent =
+            (publisher.streams || [])
+                .map((stream) => `${stream.type} (${stream.mid})`)
+                .join(', ') || 'n/a'
 
         const actionCell = document.createElement('td')
         const button = document.createElement('button')
@@ -165,9 +167,9 @@ const vrUpdateFeeds = (publishers = []) => {
         existingMids.forEach((mid) => vrState.midToFeed.delete(mid))
         const normalized = { ...publisher, id: feedId }
         vrState.feeds.set(feedId, normalized)
-            ; (normalized.streams || []).forEach((stream) => {
-                vrState.midToFeed.set(stream.mid, feedId)
-            })
+        ;(normalized.streams || []).forEach((stream) => {
+            vrState.midToFeed.set(stream.mid, feedId)
+        })
     })
     vrRenderParticipants()
     vrSubscribeAutomatically()
@@ -246,14 +248,16 @@ const vrEnsureSubscriber = async ({ subscribe }) => {
             const entry = vrEnsureRemoteEntry(feedId)
             if (on) {
                 const stream = entry[track.kind] || new MediaStream()
-                stream.getTracks()
+                stream
+                    .getTracks()
                     .filter((t) => t.kind === track.kind)
                     .forEach((t) => stream.removeTrack(t))
                 stream.addTrack(track.clone())
                 entry[track.kind] = stream
             } else if (entry[track.kind]) {
                 const stream = entry[track.kind]
-                stream.getTracks()
+                stream
+                    .getTracks()
                     .filter((t) => t.id === track.id)
                     .forEach((t) => stream.removeTrack(t))
                 if (stream.getTracks().length === 0) entry[track.kind] = null
@@ -342,12 +346,14 @@ const vrAttachPublisherHandlers = () => {
             vrState.localStreams.set(kind, stream)
         }
         if (on) {
-            stream.getTracks()
+            stream
+                .getTracks()
                 .filter((t) => t.kind === kind)
                 .forEach((t) => stream.removeTrack(t))
             stream.addTrack(track)
         } else {
-            stream.getTracks()
+            stream
+                .getTracks()
                 .filter((t) => t.id === track.id)
                 .forEach((t) => stream.removeTrack(t))
         }
@@ -551,7 +557,7 @@ const vrBindUi = () => {
 
     window.addEventListener('beforeunload', () => {
         if (vrState.session) {
-            vrDisconnect().catch(() => { })
+            vrDisconnect().catch(() => {})
         }
     })
 }

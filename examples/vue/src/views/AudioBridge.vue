@@ -10,231 +10,309 @@
             Contribute on GitHub
         </a>
         <main class="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 lg:px-8">
-        <header class="panel">
-            <div class="panel-body flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-                <div class="space-y-2">
-                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">
-                        Plugin Demo
-                    </p>
-                    <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">
-                        Audio Bridge (Mixed Contributions)
-                    </h1>
-                    <p class="max-w-2xl text-sm text-slate-300">
-                        Connect to a Janus AudioBridge room, publish your microphone, and manage spatial audio, mute,
-                        and suspension controls for every participant.
-                    </p>
-                </div>
-                <button
-                    :disabled="connecting"
-                    class="btn btn-secondary text-base shadow-lg shadow-slate-900/60 disabled:cursor-not-allowed disabled:opacity-60"
-                    @click="handleStartClick"
+            <header class="panel">
+                <div
+                    class="panel-body flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
                 >
-                    <span v-if="connecting" class="flex items-center gap-2">
-                        <span class="inline-block h-3 w-3 animate-ping rounded-full bg-slate-200"></span>
-                        Working…
-                    </span>
-                    <span v-else>{{ startButtonLabel }}</span>
-                </button>
-            </div>
-        </header>
-
-        <section v-if="showDetails" class="panel">
-            <div class="panel-body space-y-6">
-                <div class="rounded-2xl bg-sky-600/20 p-4 text-sky-100">
-                    Want to learn more about the <strong class="font-semibold text-sky-200">AudioBridge</strong>
-                    plugin? Explore the
-                    <a
-                        href="https://janus.conf.meetecho.com/docs/audiobridge"
-                        target="_blank"
-                        rel="noreferrer"
-                        class="font-medium text-sky-300 underline decoration-sky-500/60 underline-offset-4 hover:text-sky-200"
-                    >official documentation</a>.
-                </div>
-                <div class="space-y-4 text-sm leading-relaxed text-slate-200">
-                    <p>
-                        The AudioBridge demo showcases a fully mixed audio-room experience using the Janus Gateway.
-                        Once you join, Janus mixes every contribution so your browser only needs a single
-                        PeerConnection regardless of how many peers participate.
-                    </p>
-                    <p>
-                        Provide a display name to enter the default room, publish your microphone, and keep track of
-                        everyone else in real time. Participant rows highlight mute status, suspended feeds, and
-                        advertised spatial positions.
-                    </p>
-                    <p>
-                        Press
-                        <code class="rounded bg-slate-800/70 px-1 py-0.5 text-xs text-sky-300">Start</code>
-                        to connect to your configured gateway and begin the session.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section v-if="showJoinCard" class="panel">
-            <div class="panel-body space-y-4">
-                <div class="flex flex-wrap items-center gap-3">
-                    <span
-                        v-if="badge.text"
-                        :class="['badge', badge.variant ? `bg-${badge.variant}` : 'bg-info']"
-                        role="status"
+                    <div class="space-y-2">
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                        >
+                            Plugin Demo
+                        </p>
+                        <h1
+                            class="text-3xl font-bold tracking-tight text-white md:text-4xl"
+                        >
+                            Audio Bridge (Mixed Contributions)
+                        </h1>
+                        <p class="max-w-2xl text-sm text-slate-300">
+                            Connect to a Janus AudioBridge room, publish your
+                            microphone, and manage spatial audio, mute, and
+                            suspension controls for every participant.
+                        </p>
+                    </div>
+                    <button
+                        :disabled="connecting"
+                        class="btn btn-secondary text-base shadow-lg shadow-slate-900/60 disabled:cursor-not-allowed disabled:opacity-60"
+                        @click="handleStartClick"
                     >
-                        {{ badge.text }}
-                    </span>
-                    <span class="text-sm text-slate-300">Set your display name to join the audio bridge.</span>
+                        <span v-if="connecting" class="flex items-center gap-2">
+                            <span
+                                class="inline-block h-3 w-3 animate-ping rounded-full bg-slate-200"
+                            ></span>
+                            Working…
+                        </span>
+                        <span v-else>{{ startButtonLabel }}</span>
+                    </button>
                 </div>
-                <div class="w-full">
-                    <form class="flex flex-col gap-3 md:flex-row" autocomplete="off" @submit.prevent="handleRegister">
-                        <label
-                            class="flex w-full items-center gap-3 rounded-xl border border-slate-700/60 bg-slate-900/70 px-4 py-3 shadow-inner shadow-slate-950/50 transition focus-within:border-sky-500"
+            </header>
+
+            <section v-if="showDetails" class="panel">
+                <div class="panel-body space-y-6">
+                    <div class="rounded-2xl bg-sky-600/20 p-4 text-sky-100">
+                        Want to learn more about the
+                        <strong class="font-semibold text-sky-200"
+                            >AudioBridge</strong
                         >
-                            <i class="fa-solid fa-user text-slate-400"></i>
-                            <input
-                                ref="usernameInput"
-                                v-model.trim="usernameDraft"
+                        plugin? Explore the
+                        <a
+                            href="https://janus.conf.meetecho.com/docs/audiobridge"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="font-medium text-sky-300 underline decoration-sky-500/60 underline-offset-4 hover:text-sky-200"
+                            >official documentation</a
+                        >.
+                    </div>
+                    <div
+                        class="space-y-4 text-sm leading-relaxed text-slate-200"
+                    >
+                        <p>
+                            The AudioBridge demo showcases a fully mixed
+                            audio-room experience using the Janus Gateway. Once
+                            you join, Janus mixes every contribution so your
+                            browser only needs a single PeerConnection
+                            regardless of how many peers participate.
+                        </p>
+                        <p>
+                            Provide a display name to enter the default room,
+                            publish your microphone, and keep track of everyone
+                            else in real time. Participant rows highlight mute
+                            status, suspended feeds, and advertised spatial
+                            positions.
+                        </p>
+                        <p>
+                            Press
+                            <code
+                                class="rounded bg-slate-800/70 px-1 py-0.5 text-xs text-sky-300"
+                                >Start</code
+                            >
+                            to connect to your configured gateway and begin the
+                            session.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section v-if="showJoinCard" class="panel">
+                <div class="panel-body space-y-4">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span
+                            v-if="badge.text"
+                            :class="[
+                                'badge',
+                                badge.variant
+                                    ? `bg-${badge.variant}`
+                                    : 'bg-info',
+                            ]"
+                            role="status"
+                        >
+                            {{ badge.text }}
+                        </span>
+                        <span class="text-sm text-slate-300"
+                            >Set your display name to join the audio
+                            bridge.</span
+                        >
+                    </div>
+                    <div class="w-full">
+                        <form
+                            class="flex flex-col gap-3 md:flex-row"
+                            autocomplete="off"
+                            @submit.prevent="handleRegister"
+                        >
+                            <label
+                                class="flex w-full items-center gap-3 rounded-xl border border-slate-700/60 bg-slate-900/70 px-4 py-3 shadow-inner shadow-slate-950/50 transition focus-within:border-sky-500"
+                            >
+                                <i class="fa-solid fa-user text-slate-400"></i>
+                                <input
+                                    ref="usernameInput"
+                                    v-model.trim="usernameDraft"
+                                    :disabled="inputDisabled"
+                                    class="w-full bg-transparent text-base text-white outline-none placeholder:text-slate-500"
+                                    type="text"
+                                    placeholder="Choose a display name"
+                                    autocomplete="off"
+                                    @keyup.enter.prevent="handleRegister"
+                                />
+                            </label>
+                            <button
+                                type="submit"
+                                class="btn btn-success w-full md:w-auto"
                                 :disabled="inputDisabled"
-                                class="w-full bg-transparent text-base text-white outline-none placeholder:text-slate-500"
-                                type="text"
-                                placeholder="Choose a display name"
-                                autocomplete="off"
-                                @keyup.enter.prevent="handleRegister"
-                            />
-                        </label>
-                        <button
-                            type="submit"
-                            class="btn btn-success w-full md:w-auto"
-                            :disabled="inputDisabled"
-                        >
-                            Join the room
-                        </button>
-                    </form>
+                            >
+                                Join the room
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section v-if="showRoom" class="panel">
-            <div class="panel-body grid gap-6 lg:grid-cols-2">
-                <article class="panel">
-                    <div class="panel-header flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3 text-lg font-semibold text-white">
-                            Participants
-                            <span v-if="participantBadge" class="badge bg-info">{{ participantBadge }}</span>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-2">
-                            <button
-                                v-if="audioControlsVisible"
-                                type="button"
-                                class="btn btn-danger"
-                                @click="handleToggleAudio"
+            <section v-if="showRoom" class="panel">
+                <div class="panel-body grid gap-6 lg:grid-cols-2">
+                    <article class="panel">
+                        <div
+                            class="panel-header flex items-center justify-between gap-4"
+                        >
+                            <div
+                                class="flex items-center gap-3 text-lg font-semibold text-white"
                             >
-                                {{ audioButtonLabel }}
-                            </button>
-                            <button
-                                v-if="positionButtonVisible"
-                                type="button"
-                                class="btn btn-primary"
-                                @click="handlePositionClick"
-                            >
-                                Position
-                            </button>
-                            <button
-                                v-if="suspendButtonVisible"
-                                type="button"
-                                class="btn btn-secondary"
-                                @click="handleToggleSuspend"
-                            >
-                                {{ suspendButtonLabel }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <ul v-if="participants.length" class="flex flex-col gap-3 text-sm">
-                            <li
-                                v-for="participant in participants"
-                                :key="participant.id"
-                                class="rounded-xl border border-slate-800/80 bg-slate-900/60 px-4 py-3 shadow-sm shadow-slate-950/40"
-                            >
-                                <div class="flex items-start justify-between gap-3">
-                                    <div>
-                                        <p class="font-semibold text-white">
-                                            {{ participantLabel(participant) }}
-                                            <span v-if="participant.codec" class="ml-2 text-xs font-normal text-slate-400">
-                                                {{ participant.codec }}
-                                            </span>
-                                        </p>
-                                        <p class="text-xs uppercase tracking-wide text-slate-400">
-                                            {{ participantStatusText(participant) }}
-                                        </p>
-                                    </div>
-                                    <div class="flex items-center gap-3 text-base text-slate-300">
-                                        <i
-                                            v-if="!participant.setup"
-                                            class="fa-solid fa-link-slash text-amber-400"
-                                            title="No PeerConnection"
-                                        ></i>
-                                        <i
-                                            v-if="participant.suspended"
-                                            class="fa-solid fa-eye-slash text-rose-400"
-                                            title="Suspended"
-                                        ></i>
-                                        <i
-                                            v-if="participant.muted"
-                                            class="fa-solid fa-microphone-slash text-slate-400"
-                                            title="Muted"
-                                        ></i>
-                                        <i
-                                            v-if="participant.talking"
-                                            class="fa-solid fa-wave-square text-emerald-400"
-                                            title="Speaking"
-                                        ></i>
-                                    </div>
-                                </div>
-                                <div
-                                    v-if="participant.spatialPosition !== null"
-                                    class="mt-3 flex items-center gap-3 text-xs text-slate-400"
+                                Participants
+                                <span
+                                    v-if="participantBadge"
+                                    class="badge bg-info"
+                                    >{{ participantBadge }}</span
                                 >
-                                    <span>[L</span>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="100"
-                                        step="1"
-                                        :value="participant.spatialPosition"
-                                        disabled
-                                        class="h-1 w-full cursor-default rounded-full bg-slate-700"
-                                    />
-                                    <span>R]</span>
-                                </div>
-                            </li>
-                        </ul>
-                        <p v-else class="text-sm text-slate-400">
-                            Waiting for participants to join…
-                        </p>
-                    </div>
-                </article>
-
-                <article class="panel">
-                    <div class="panel-header text-lg font-semibold text-white">
-                        Mixed Audio Output
-                    </div>
-                    <div class="panel-body flex flex-col items-center justify-center gap-4 text-sm text-slate-300">
-                        <div v-if="spinnerVisible" class="flex flex-col items-center gap-3 text-slate-400">
-                            <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-slate-600 border-t-white"></span>
-                            <span>Awaiting audio setup…</span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button
+                                    v-if="audioControlsVisible"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    @click="handleToggleAudio"
+                                >
+                                    {{ audioButtonLabel }}
+                                </button>
+                                <button
+                                    v-if="positionButtonVisible"
+                                    type="button"
+                                    class="btn btn-primary"
+                                    @click="handlePositionClick"
+                                >
+                                    Position
+                                </button>
+                                <button
+                                    v-if="suspendButtonVisible"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    @click="handleToggleSuspend"
+                                >
+                                    {{ suspendButtonLabel }}
+                                </button>
+                            </div>
                         </div>
-                        <audio
-                            v-if="remoteStream"
-                            ref="remoteAudio"
-                            class="w-full max-w-md rounded-2xl border border-slate-800/70 bg-slate-900/80 p-3 shadow-inner shadow-slate-950/60"
-                            controls
-                            autoplay
-                        ></audio>
-                        <p v-if="!remoteStream" class="text-center text-slate-500">
-                            Publish to the room to start receiving mixed audio.
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </section>
+                        <div class="panel-body">
+                            <ul
+                                v-if="participants.length"
+                                class="flex flex-col gap-3 text-sm"
+                            >
+                                <li
+                                    v-for="participant in participants"
+                                    :key="participant.id"
+                                    class="rounded-xl border border-slate-800/80 bg-slate-900/60 px-4 py-3 shadow-sm shadow-slate-950/40"
+                                >
+                                    <div
+                                        class="flex items-start justify-between gap-3"
+                                    >
+                                        <div>
+                                            <p class="font-semibold text-white">
+                                                {{
+                                                    participantLabel(
+                                                        participant
+                                                    )
+                                                }}
+                                                <span
+                                                    v-if="participant.codec"
+                                                    class="ml-2 text-xs font-normal text-slate-400"
+                                                >
+                                                    {{ participant.codec }}
+                                                </span>
+                                            </p>
+                                            <p
+                                                class="text-xs uppercase tracking-wide text-slate-400"
+                                            >
+                                                {{
+                                                    participantStatusText(
+                                                        participant
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="flex items-center gap-3 text-base text-slate-300"
+                                        >
+                                            <i
+                                                v-if="!participant.setup"
+                                                class="fa-solid fa-link-slash text-amber-400"
+                                                title="No PeerConnection"
+                                            ></i>
+                                            <i
+                                                v-if="participant.suspended"
+                                                class="fa-solid fa-eye-slash text-rose-400"
+                                                title="Suspended"
+                                            ></i>
+                                            <i
+                                                v-if="participant.muted"
+                                                class="fa-solid fa-microphone-slash text-slate-400"
+                                                title="Muted"
+                                            ></i>
+                                            <i
+                                                v-if="participant.talking"
+                                                class="fa-solid fa-wave-square text-emerald-400"
+                                                title="Speaking"
+                                            ></i>
+                                        </div>
+                                    </div>
+                                    <div
+                                        v-if="
+                                            participant.spatialPosition !== null
+                                        "
+                                        class="mt-3 flex items-center gap-3 text-xs text-slate-400"
+                                    >
+                                        <span>[L</span>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            :value="participant.spatialPosition"
+                                            disabled
+                                            class="h-1 w-full cursor-default rounded-full bg-slate-700"
+                                        />
+                                        <span>R]</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p v-else class="text-sm text-slate-400">
+                                Waiting for participants to join…
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div
+                            class="panel-header text-lg font-semibold text-white"
+                        >
+                            Mixed Audio Output
+                        </div>
+                        <div
+                            class="panel-body flex flex-col items-center justify-center gap-4 text-sm text-slate-300"
+                        >
+                            <div
+                                v-if="spinnerVisible"
+                                class="flex flex-col items-center gap-3 text-slate-400"
+                            >
+                                <span
+                                    class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-slate-600 border-t-white"
+                                ></span>
+                                <span>Awaiting audio setup…</span>
+                            </div>
+                            <audio
+                                v-if="remoteStream"
+                                ref="remoteAudio"
+                                class="w-full max-w-md rounded-2xl border border-slate-800/70 bg-slate-900/80 p-3 shadow-inner shadow-slate-950/60"
+                                controls
+                                autoplay
+                            ></audio>
+                            <p
+                                v-if="!remoteStream"
+                                class="text-center text-slate-500"
+                            >
+                                Publish to the room to start receiving mixed
+                                audio.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </main>
     </div>
 </template>
@@ -336,7 +414,10 @@ export default {
             return this.hasJoined && this.webrtcUp
         },
         positionButtonVisible() {
-            return this.hasJoined && this.participants.some((p) => p.spatialPosition !== null)
+            return (
+                this.hasJoined &&
+                this.participants.some((p) => p.spatialPosition !== null)
+            )
         },
     },
     watch: {
@@ -350,7 +431,9 @@ export default {
                     const playPromise = audio.play?.()
                     if (playPromise && typeof playPromise.then === 'function') {
                         playPromise.catch(() => {
-                            console.warn('User interaction is required to play remote audio')
+                            console.warn(
+                                'User interaction is required to play remote audio'
+                            )
                         })
                     }
                 } else {
@@ -391,7 +474,9 @@ export default {
         },
         participantLabel(participant) {
             const display = participant.display || `User ${participant.id}`
-            return participant.id === this.participantId ? `${display} (you)` : display
+            return participant.id === this.participantId
+                ? `${display} (you)`
+                : display
         },
         participantStatusText(participant) {
             const flags = []
@@ -430,10 +515,18 @@ export default {
             this.session = session
             this.plugin = await session.attach(JanusAudioBridgePlugin)
 
-            this.trackSubscription(this.plugin.onMessage.subscribe(this.handlePluginMessage))
-            this.trackSubscription(this.plugin.onRemoteTrack.subscribe(this.handleRemoteTrack))
-            this.trackSubscription(this.plugin.onLocalTrack.subscribe(this.handleLocalTrack))
-            this.trackSubscription(this.plugin.onCleanup.subscribe(this.handlePluginCleanup))
+            this.trackSubscription(
+                this.plugin.onMessage.subscribe(this.handlePluginMessage)
+            )
+            this.trackSubscription(
+                this.plugin.onRemoteTrack.subscribe(this.handleRemoteTrack)
+            )
+            this.trackSubscription(
+                this.plugin.onLocalTrack.subscribe(this.handleLocalTrack)
+            )
+            this.trackSubscription(
+                this.plugin.onCleanup.subscribe(this.handlePluginCleanup)
+            )
 
             this.showDetails = false
             this.showJoinCard = true
@@ -506,7 +599,10 @@ export default {
             if (!this.plugin) return
             const name = this.usernameDraft
             if (!name) {
-                this.setBadge('Insert your display name (e.g., pippo)', 'warning')
+                this.setBadge(
+                    'Insert your display name (e.g., pippo)',
+                    'warning'
+                )
                 return
             }
             if (/[^a-zA-Z0-9]/.test(name)) {
@@ -520,7 +616,10 @@ export default {
                 const payload = {
                     display: name,
                 }
-                if (this.options.audioCodec && ['opus', 'pcmu', 'pcma'].includes(this.options.audioCodec)) {
+                if (
+                    this.options.audioCodec &&
+                    ['opus', 'pcmu', 'pcma'].includes(this.options.audioCodec)
+                ) {
                     payload.codec = this.options.audioCodec
                 }
                 if (this.options.group) {
@@ -530,7 +629,10 @@ export default {
                 this.setBadge('Joining room…', 'info')
             } catch (error) {
                 console.error('Failed to join room', error)
-                this.setBadge(`Join failed: ${error?.message || error}`, 'danger')
+                this.setBadge(
+                    `Join failed: ${error?.message || error}`,
+                    'danger'
+                )
                 this.inputDisabled = false
             }
         },
@@ -542,9 +644,19 @@ export default {
                 let offer = await this.plugin.createOffer({
                     tracks: [{ type: 'audio', capture: true, recv: true }],
                 })
-                if (this.options.stereo && offer?.sdp && !offer.sdp.includes('stereo=1')) {
-                    const updatedSdp = offer.sdp.replace(/useinbandfec=1/g, 'useinbandfec=1;stereo=1')
-                    offer = new RTCSessionDescription({ type: offer.type, sdp: updatedSdp })
+                if (
+                    this.options.stereo &&
+                    offer?.sdp &&
+                    !offer.sdp.includes('stereo=1')
+                ) {
+                    const updatedSdp = offer.sdp.replace(
+                        /useinbandfec=1/g,
+                        'useinbandfec=1;stereo=1'
+                    )
+                    offer = new RTCSessionDescription({
+                        type: offer.type,
+                        sdp: updatedSdp,
+                    })
                 }
                 await this.plugin.configure({
                     offer,
@@ -569,14 +681,26 @@ export default {
                 this.participantMap.set(id, {
                     id,
                     display: participant.display ?? existing.display ?? null,
-                    setup: parseBoolean(participant.setup, existing.setup ?? true),
-                    muted: parseBoolean(participant.muted, existing.muted ?? false),
-                    talking: parseBoolean(participant.talking, existing.talking ?? false),
-                    suspended: parseBoolean(participant.suspended, existing.suspended ?? false),
+                    setup: parseBoolean(
+                        participant.setup,
+                        existing.setup ?? true
+                    ),
+                    muted: parseBoolean(
+                        participant.muted,
+                        existing.muted ?? false
+                    ),
+                    talking: parseBoolean(
+                        participant.talking,
+                        existing.talking ?? false
+                    ),
+                    suspended: parseBoolean(
+                        participant.suspended,
+                        existing.suspended ?? false
+                    ),
                     spatialPosition:
                         typeof participant.spatial_position === 'number'
                             ? participant.spatial_position
-                            : existing.spatialPosition ?? null,
+                            : (existing.spatialPosition ?? null),
                     codec: participant.codec || existing.codec || null,
                 })
             })
@@ -631,12 +755,16 @@ export default {
         handleAudioBridgeRoomChanged(message) {
             this.roomId = message.room ?? this.roomId
             this.participantId = normalizeId(message.id)
-            this.handleParticipantsList(message.participants || [], { replace: true })
+            this.handleParticipantsList(message.participants || [], {
+                replace: true,
+            })
         },
         handleAudioBridgeEvent(message) {
             if (message.resumed === true) {
                 this.audioSuspended = false
-                this.handleParticipantsList(message.participants || [], { replace: true })
+                this.handleParticipantsList(message.participants || [], {
+                    replace: true,
+                })
             } else if (Array.isArray(message.participants)) {
                 this.handleParticipantsList(message.participants)
             } else if (message.participant) {
@@ -649,7 +777,10 @@ export default {
                 }
                 const record = this.participantMap.get(suspendedId)
                 if (record) {
-                    this.participantMap.set(suspendedId, { ...record, suspended: true })
+                    this.participantMap.set(suspendedId, {
+                        ...record,
+                        suspended: true,
+                    })
                     this.refreshParticipants()
                 }
             }
@@ -660,7 +791,10 @@ export default {
                 }
                 const record = this.participantMap.get(resumedId)
                 if (record) {
-                    this.participantMap.set(resumedId, { ...record, suspended: false })
+                    this.participantMap.set(resumedId, {
+                        ...record,
+                        suspended: false,
+                    })
                     this.refreshParticipants()
                 }
             }
@@ -688,7 +822,8 @@ export default {
             if (!on) {
                 if (this.remoteStream) {
                     const current = this.remoteStream
-                    current.getAudioTracks()
+                    current
+                        .getAudioTracks()
                         .filter((t) => t.id === track.id)
                         .forEach((t) => current.removeTrack(t))
                     if (!current.getAudioTracks().length) {
@@ -700,7 +835,9 @@ export default {
             }
             this.spinnerVisible = false
             const stream = this.remoteStream || new MediaStream()
-            stream.getAudioTracks().forEach((existing) => stream.removeTrack(existing))
+            stream
+                .getAudioTracks()
+                .forEach((existing) => stream.removeTrack(existing))
             stream.addTrack(track)
             this.remoteStream = stream
             this.audioEnabled = true
@@ -724,7 +861,8 @@ export default {
             }
         },
         async handleToggleSuspend() {
-            if (!this.plugin || !this.hasJoined || this.participantId == null) return
+            if (!this.plugin || !this.hasJoined || this.participantId == null)
+                return
             const request = this.audioSuspended ? 'resume' : 'suspend'
             try {
                 await this.plugin.send({
@@ -742,7 +880,9 @@ export default {
         },
         async handlePositionClick() {
             if (!this.plugin || !this.hasJoined) return
-            const result = window.prompt('Insert new spatial position: [0-100] (0=left, 50=center, 100=right)')
+            const result = window.prompt(
+                'Insert new spatial position: [0-100] (0=left, 50=center, 100=right)'
+            )
             if (result === null) return
             const spatial = Number(result)
             if (Number.isNaN(spatial) || spatial < 0 || spatial > 100) {
@@ -805,7 +945,9 @@ export default {
     font-weight: 600;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .btn:hover:not(:disabled) {

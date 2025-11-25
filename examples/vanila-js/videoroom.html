@@ -1,95 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VideoRoom Demo</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VideoRoom Demo</title>
-</head>
-
-<body>
-    <div id="app">
-        <section class="card">
-            <h1>VideoRoom demo</h1>
-            <p class="subtle">
-                Publish your camera, subscribe to other publishers and
-                manage feed subscriptions. Mirrors the behaviour of
-                <code>videoroom.js</code> from the Janus demos.
-            </p>
-            <div class="grid two">
-                <div class="grid">
-                    <label>
-                        Server URL
-                        <input id="server" type="text" autocomplete="off" />
-                    </label>
-                    <label>
-                        Room ID
-                        <input id="room" type="number" />
-                    </label>
-                    <label>
-                        Display name
-                        <input id="display" type="text" autocomplete="nickname" />
-                    </label>
+    <body>
+        <div id="app">
+            <section class="card">
+                <h1>VideoRoom demo</h1>
+                <p class="subtle">
+                    Publish your camera, subscribe to other publishers and
+                    manage feed subscriptions. Mirrors the behaviour of
+                    <code>videoroom.js</code> from the Janus demos.
+                </p>
+                <div class="grid two">
+                    <div class="grid">
+                        <label>
+                            Server URL
+                            <input id="server" type="text" autocomplete="off" />
+                        </label>
+                        <label>
+                            Room ID
+                            <input id="room" type="number" />
+                        </label>
+                        <label>
+                            Display name
+                            <input
+                                id="display"
+                                type="text"
+                                autocomplete="nickname"
+                            />
+                        </label>
+                    </div>
+                    <div class="grid">
+                        <label>
+                            Bitrate (bps)
+                            <input id="bitrate" type="number" value="512000" />
+                        </label>
+                        <label>
+                            Max subscribers
+                            <input
+                                id="max-subscribers"
+                                type="number"
+                                value="12"
+                            />
+                        </label>
+                        <div class="status" id="status"></div>
+                        <div class="inline-actions">
+                            <button id="connect">Connect</button>
+                            <button id="join" disabled>Join</button>
+                            <button id="leave" class="secondary" disabled>
+                                Leave
+                            </button>
+                        </div>
+                        <div class="inline-actions">
+                            <button id="publish" disabled>
+                                Start publishing
+                            </button>
+                            <button id="unpublish" class="secondary" disabled>
+                                Stop publishing
+                            </button>
+                            <button id="refresh" class="secondary" disabled>
+                                Refresh feeds
+                            </button>
+                        </div>
+                        <div class="inline-actions">
+                            <button id="mute-audio" class="secondary" disabled>
+                                Mute audio
+                            </button>
+                            <button id="mute-video" class="secondary" disabled>
+                                Mute video
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid">
-                    <label>
-                        Bitrate (bps)
-                        <input id="bitrate" type="number" value="512000" />
-                    </label>
-                    <label>
-                        Max subscribers
-                        <input id="max-subscribers" type="number" value="12" />
-                    </label>
-                    <div class="status" id="status"></div>
-                    <div class="inline-actions">
-                        <button id="connect">Connect</button>
-                        <button id="join" disabled>Join</button>
-                        <button id="leave" class="secondary" disabled>Leave</button>
-                    </div>
-                    <div class="inline-actions">
-                        <button id="publish" disabled>Start publishing</button>
-                        <button id="unpublish" class="secondary" disabled>Stop publishing</button>
-                        <button id="refresh" class="secondary" disabled>Refresh feeds</button>
-                    </div>
-                    <div class="inline-actions">
-                        <button id="mute-audio" class="secondary" disabled>Mute audio</button>
-                        <button id="mute-video" class="secondary" disabled>Mute video</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Local feed</h2>
-            <div class="media-pane" id="local-pane"></div>
-        </section>
+            <section class="card">
+                <h2 class="section-title">Local feed</h2>
+                <div class="media-pane" id="local-pane"></div>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Remote feeds</h2>
-            <div class="media-pane" id="remote-pane"></div>
-        </section>
+            <section class="card">
+                <h2 class="section-title">Remote feeds</h2>
+                <div class="media-pane" id="remote-pane"></div>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Participants</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Publisher</th>
-                        <th>Streams</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="participants"></tbody>
-            </table>
-        </section>
+            <section class="card">
+                <h2 class="section-title">Participants</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Publisher</th>
+                            <th>Streams</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="participants"></tbody>
+                </table>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Log</h2>
-            <div id="log" class="log"></div>
-        </section>
-    </div>
-    <script type="module" src="./js/videoroom.js"></script>
-</body>
-
+            <section class="card">
+                <h2 class="section-title">Log</h2>
+                <div id="log" class="log"></div>
+            </section>
+        </div>
+        <script type="module" src="./js/videoroom.js"></script>
+    </body>
 </html>

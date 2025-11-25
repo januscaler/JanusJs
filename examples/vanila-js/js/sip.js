@@ -18,7 +18,7 @@ async function test() {
         remoteStream.addTrack(data.track.clone())
         JanusJs.playMediaStream(remoteStream)
     })
-   
+
     plugin.onMessage.subscribe(async (data) => {
         console.log(data.message.result)
         const result = data.message.result

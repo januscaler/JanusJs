@@ -19,6 +19,7 @@
     ],
     "scripts": {
         "update": "./scripts/update_janus_js.sh",
+        "format": "npx prettier --write .",
         "build:rollup": "rollup -c",
         "build": "rimraf dist && tsc && npm run build:rollup",
         "doc": "npx typedoc src/index.ts"

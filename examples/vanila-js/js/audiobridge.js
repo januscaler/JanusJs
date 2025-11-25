@@ -1,7 +1,11 @@
 import { JanusAudioBridgePlugin } from 'typed_janus_js'
 import { config } from './conf'
 import { $, clearChildren, setDisabled, setText } from './helpers/dom'
-import { applyRemoteJsep, createJanusConnection, stopPluginWebrtc } from './helpers/janus'
+import {
+    applyRemoteJsep,
+    createJanusConnection,
+    stopPluginWebrtc,
+} from './helpers/janus'
 
 const ui = {
     startButton: $('#start'),
@@ -97,14 +101,17 @@ const parseBoolean = (value, fallback = false) => {
 
 const escapeHtml = (value) => {
     if (value == null) return ''
-    return String(value)
-        .replace(/[&<>"']/g, (char) => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;',
-        }[char]))
+    return String(value).replace(
+        /[&<>"']/g,
+        (char) =>
+            ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+            })[char]
+    )
 }
 
 const ensureSpinner = () => {
@@ -244,13 +251,17 @@ const updateParticipantRow = (participant) => {
     if (!row) return
 
     const displayName = participant.display || `User ${id}`
-    const label = id === state.participantId ? `${displayName} (you)` : displayName
+    const label =
+        id === state.participantId ? `${displayName} (you)` : displayName
     row.nameNode.textContent = label
 
     const setup = parseBoolean(participant.setup, true)
     const muted = parseBoolean(participant.muted, false)
     const suspended = parseBoolean(participant.suspended, false)
-    const spatial = typeof participant.spatial_position === 'number' ? participant.spatial_position : null
+    const spatial =
+        typeof participant.spatial_position === 'number'
+            ? participant.spatial_position
+            : null
 
     setIconVisibility(row.icons.setup, !setup)
     setIconVisibility(row.icons.muted, muted)
@@ -277,7 +288,10 @@ const removeParticipantRow = (id) => {
 const maybeEnableStereo = (offer) => {
     if (!options.stereo || !offer?.sdp) return offer
     if (offer.sdp.includes('stereo=1')) return offer
-    const updatedSdp = offer.sdp.replace(/useinbandfec=1/g, 'useinbandfec=1;stereo=1')
+    const updatedSdp = offer.sdp.replace(
+        /useinbandfec=1/g,
+        'useinbandfec=1;stereo=1'
+    )
     return new RTCSessionDescription({ type: offer.type, sdp: updatedSdp })
 }
 
@@ -292,7 +306,10 @@ const showRoomUi = () => {
 
 const updateAudioButton = () => {
     if (!ui.toggleAudioButton) return
-    resetClass(ui.toggleAudioButton, initialAudioButtonClasses || 'btn btn-danger hide')
+    resetClass(
+        ui.toggleAudioButton,
+        initialAudioButtonClasses || 'btn btn-danger hide'
+    )
     if (!state.joined || !state.webrtcUp) {
         hide(ui.toggleAudioButton)
         return
@@ -310,7 +327,10 @@ const updateAudioButton = () => {
 
 const updateSuspendButton = () => {
     if (!ui.toggleSuspendButton) return
-    resetClass(ui.toggleSuspendButton, initialSuspendButtonClasses || 'btn btn-secondary hide')
+    resetClass(
+        ui.toggleSuspendButton,
+        initialSuspendButtonClasses || 'btn btn-secondary hide'
+    )
     if (!state.joined || !state.webrtcUp) {
         hide(ui.toggleSuspendButton)
         return
@@ -348,7 +368,10 @@ const buildJoinOptions = (display) => {
     const payload = {
         display,
     }
-    if (options.audioCodec && ['opus', 'pcmu', 'pcma'].includes(options.audioCodec)) {
+    if (
+        options.audioCodec &&
+        ['opus', 'pcmu', 'pcma'].includes(options.audioCodec)
+    ) {
         payload.codec = options.audioCodec
     }
     if (options.group) {
@@ -677,7 +700,9 @@ const handleToggleSuspend = async () => {
 
 const handlePositionClick = async () => {
     if (!state.plugin || !state.joined) return
-    const result = window.prompt('Insert new spatial position: [0-100] (0=left, 50=center, 100=right)')
+    const result = window.prompt(
+        'Insert new spatial position: [0-100] (0=left, 50=center, 100=right)'
+    )
     if (result === null) return
     const spatial = Number(result)
     if (Number.isNaN(spatial) || spatial < 0 || spatial > 100) {
@@ -714,11 +739,16 @@ const handleStartClick = async () => {
 }
 
 const init = () => {
-    if (ui.startButton) ui.startButton.addEventListener('click', handleStartClick)
-    if (ui.registerButton) ui.registerButton.addEventListener('click', handleRegisterClick)
-    if (ui.toggleAudioButton) ui.toggleAudioButton.addEventListener('click', handleToggleAudio)
-    if (ui.toggleSuspendButton) ui.toggleSuspendButton.addEventListener('click', handleToggleSuspend)
-    if (ui.positionButton) ui.positionButton.addEventListener('click', handlePositionClick)
+    if (ui.startButton)
+        ui.startButton.addEventListener('click', handleStartClick)
+    if (ui.registerButton)
+        ui.registerButton.addEventListener('click', handleRegisterClick)
+    if (ui.toggleAudioButton)
+        ui.toggleAudioButton.addEventListener('click', handleToggleAudio)
+    if (ui.toggleSuspendButton)
+        ui.toggleSuspendButton.addEventListener('click', handleToggleSuspend)
+    if (ui.positionButton)
+        ui.positionButton.addEventListener('click', handlePositionClick)
 
     hide(ui.audioJoin)
     hide(ui.room)
@@ -728,7 +758,7 @@ const init = () => {
 
     window.addEventListener('beforeunload', () => {
         if (state.session) {
-            disconnect().catch(() => { })
+            disconnect().catch(() => {})
         }
     })
 }

@@ -2,15 +2,19 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
 
-const plugins = [resolve(), commonjs(), typescript({
-    tsconfigOverride: {
-        compilerOptions: {
-            declaration: true,
-            declarationDir: 'dist',
+const plugins = [
+    resolve(),
+    commonjs(),
+    typescript({
+        tsconfigOverride: {
+            compilerOptions: {
+                declaration: true,
+                declarationDir: 'dist',
+            },
+            include: ['src'],
         },
-        include: ['src'],
-    }
-})]
+    }),
+]
 
 export default [
     // ESM (for Vite/Webpack/modern bundlers)
@@ -45,5 +49,5 @@ export default [
             sourcemap: true,
         },
         plugins,
-    }
+    },
 ]

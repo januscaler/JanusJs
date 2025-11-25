@@ -1,79 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>screenshare call Demo</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>screenshare call Demo</title>
-</head>
-
-<body>
-    <div id="app">
-        <section class="card">
-            <h1>Video call demo</h1>
-            <p class="subtle">
-                Register two peers and place a video call with camera,
-                screen-share and full call controls.
-            </p>
-            <div class="grid two">
-                <div class="grid">
-                    <label>
-                        Server URL
-                        <input id="vc-server" type="text" />
-                    </label>
-                    <label>
-                        Username
-                        <input id="vc-username" type="text" />
-                    </label>
-                    <label>
-                        Partner username
-                        <input id="vc-peer" type="text" />
-                    </label>
-                </div>
-                <div class="grid">
-                    <div class="status" id="vc-status"></div>
-                    <div class="inline-actions">
-                        <button id="vc-connect">Connect</button>
-                        <button id="vc-register" disabled>Register</button>
-                        <button id="vc-call" disabled>Call</button>
-                        <button id="vc-hangup" class="secondary" disabled>
-                            Hangup
-                        </button>
+    <body>
+        <div id="app">
+            <section class="card">
+                <h1>Video call demo</h1>
+                <p class="subtle">
+                    Register two peers and place a video call with camera,
+                    screen-share and full call controls.
+                </p>
+                <div class="grid two">
+                    <div class="grid">
+                        <label>
+                            Server URL
+                            <input id="vc-server" type="text" />
+                        </label>
+                        <label>
+                            Username
+                            <input id="vc-username" type="text" />
+                        </label>
+                        <label>
+                            Partner username
+                            <input id="vc-peer" type="text" />
+                        </label>
                     </div>
-                    <div class="inline-actions">
-                        <button id="vc-share" class="secondary" disabled>
-                            Share screen
-                        </button>
-                        <button id="vc-camera" class="secondary" disabled>
-                            Camera on/off
-                        </button>
-                        <button id="vc-audio" class="secondary" disabled>
-                            Audio mute
-                        </button>
+                    <div class="grid">
+                        <div class="status" id="vc-status"></div>
+                        <div class="inline-actions">
+                            <button id="vc-connect">Connect</button>
+                            <button id="vc-register" disabled>Register</button>
+                            <button id="vc-call" disabled>Call</button>
+                            <button id="vc-hangup" class="secondary" disabled>
+                                Hangup
+                            </button>
+                        </div>
+                        <div class="inline-actions">
+                            <button id="vc-share" class="secondary" disabled>
+                                Share screen
+                            </button>
+                            <button id="vc-camera" class="secondary" disabled>
+                                Camera on/off
+                            </button>
+                            <button id="vc-audio" class="secondary" disabled>
+                                Audio mute
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Local preview</h2>
-            <div class="media-pane" id="vc-local"></div>
-        </section>
+            <section class="card">
+                <h2 class="section-title">Local preview</h2>
+                <div class="media-pane" id="vc-local"></div>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Remote media</h2>
-            <div class="media-pane">
-                <video id="vc-remote" controls autoplay></video>
-            </div>
-        </section>
+            <section class="card">
+                <h2 class="section-title">Remote media</h2>
+                <div class="media-pane">
+                    <video id="vc-remote" controls autoplay></video>
+                </div>
+            </section>
 
-        <section class="card">
-            <h2 class="section-title">Log</h2>
-            <div id="vc-log" class="log"></div>
-        </section>
-    </div>
-    <script type="module" src="./js/screesharevideocall.js"></script>
-</body>
-
+            <section class="card">
+                <h2 class="section-title">Log</h2>
+                <div id="vc-log" class="log"></div>
+            </section>
+        </div>
+        <script type="module" src="./js/screesharevideocall.js"></script>
+    </body>
 </html>

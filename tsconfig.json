@@ -10,21 +10,11 @@
         "declaration": true,
         "allowJs": true,
         "moduleResolution": "node",
-        "lib": [
-            "ES5",
-            "ES2015",
-            "DOM",
-            "ScriptHost"
-        ],
+        "lib": ["ES5", "ES2015", "DOM", "ScriptHost"],
         "emitDeclarationOnly": false,
         "esModuleInterop": true,
         "skipLibCheck": true
     },
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "janus-gateway"
-    ]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "janus-gateway"]
 }

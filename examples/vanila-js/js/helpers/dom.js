@@ -1,7 +1,8 @@
 const defaultLogLimit = 200
 
 export const $ = (selector, scope = document) => scope.querySelector(selector)
-export const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector))
+export const $$ = (selector, scope = document) =>
+    Array.from(scope.querySelectorAll(selector))
 
 export const setText = (element, text) => {
     if (!element) return

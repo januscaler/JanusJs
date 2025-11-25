@@ -1287,7 +1287,9 @@ ul.tsd-type-parameters .tsd-comment {
     overflow: hidden;
     opacity: 0.8;
     height: 40px;
-    transition: opacity 0.1s, background-color 0.2s;
+    transition:
+        opacity 0.1s,
+        background-color 0.2s;
     vertical-align: bottom;
     cursor: pointer;
 }
@@ -1334,7 +1336,9 @@ input[type='checkbox']:checked + .tsd-widget:before {
     position: relative;
     display: inline-block;
     height: 40px;
-    transition: opacity 0.1s, background-color 0.2s;
+    transition:
+        opacity 0.1s,
+        background-color 0.2s;
     vertical-align: bottom;
     cursor: pointer;
 }
@@ -1363,7 +1367,9 @@ input[type='checkbox']:checked + .tsd-widget:before {
     opacity: 0;
     list-style: none;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-    transition: visibility 0s 0.2s, opacity 0.2s;
+    transition:
+        visibility 0s 0.2s,
+        opacity 0.2s;
 }
 .tsd-select .tsd-select-list li {
     padding: 0 20px 0 0;

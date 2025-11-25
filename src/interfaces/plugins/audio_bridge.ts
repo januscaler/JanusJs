@@ -1,5 +1,5 @@
-import { BasicMessageBody } from "."
-export interface AudioBridgeCreateOptions{
+import { BasicMessageBody } from '.'
+export interface AudioBridgeCreateOptions {
     id?: string | number
     permanent: boolean
     description?: string

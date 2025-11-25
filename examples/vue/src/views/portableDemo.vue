@@ -2,20 +2,37 @@
     <div class="relative">
         <main class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-12 lg:px-8">
             <header class="panel">
-                <div class="panel-body flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div
+                    class="panel-body flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+                >
                     <div class="space-y-2">
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Portable Demo</p>
-                        <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                        >
+                            Portable Demo
+                        </p>
+                        <h1
+                            class="text-3xl font-bold tracking-tight text-white md:text-4xl"
+                        >
                             Audio Bridge Portable Widget
                         </h1>
                         <p class="max-w-2xl text-sm text-slate-300">
-                            Experiment with the lightweight <code class="bg-slate-900/80 px-1 text-xs text-sky-300">AudioBridgePortable</code>
-                            component. Provide a display name, choose a room, and it will automatically connect to the configured
+                            Experiment with the lightweight
+                            <code
+                                class="bg-slate-900/80 px-1 text-xs text-sky-300"
+                                >AudioBridgePortable</code
+                            >
+                            component. Provide a display name, choose a room,
+                            and it will automatically connect to the configured
                             Janus server and mix remote audio for you.
                         </p>
                     </div>
-                    <div class="rounded-2xl border border-slate-700/60 bg-slate-900/70 p-4 text-xs text-slate-300">
-                        <p class="font-semibold text-slate-200">Current Gateway</p>
+                    <div
+                        class="rounded-2xl border border-slate-700/60 bg-slate-900/70 p-4 text-xs text-slate-300"
+                    >
+                        <p class="font-semibold text-slate-200">
+                            Current Gateway
+                        </p>
                         <p class="truncate text-sky-300">{{ janusServer }}</p>
                     </div>
                 </div>
@@ -23,9 +40,15 @@
 
             <section class="panel">
                 <div class="panel-body space-y-6">
-                    <form class="grid gap-4 sm:grid-cols-[1fr_minmax(120px,200px)_auto]" @submit.prevent="handleApply">
+                    <form
+                        class="grid gap-4 sm:grid-cols-[1fr_minmax(120px,200px)_auto]"
+                        @submit.prevent="handleApply"
+                    >
                         <label class="flex w-full flex-col gap-2">
-                            <span class="text-xs uppercase tracking-wide text-slate-400">Display Name</span>
+                            <span
+                                class="text-xs uppercase tracking-wide text-slate-400"
+                                >Display Name</span
+                            >
                             <input
                                 v-model.trim="displayNameInput"
                                 class="rounded-xl border border-slate-700/60 bg-slate-900/70 px-4 py-3 text-base text-white outline-none focus:border-sky-500"
@@ -35,7 +58,10 @@
                             />
                         </label>
                         <label class="flex w-full flex-col gap-2">
-                            <span class="text-xs uppercase tracking-wide text-slate-400">Room</span>
+                            <span
+                                class="text-xs uppercase tracking-wide text-slate-400"
+                                >Room</span
+                            >
                             <input
                                 v-model="roomInput"
                                 class="rounded-xl border border-slate-700/60 bg-slate-900/70 px-4 py-3 text-base text-white outline-none focus:border-sky-500"
@@ -45,17 +71,29 @@
                             />
                         </label>
                         <div class="flex items-end gap-2">
-                            <button type="submit" class="btn btn-primary">Apply</button>
-                            <button type="button" class="btn btn-secondary" @click="randomizeDisplayName">
+                            <button type="submit" class="btn btn-primary">
+                                Apply
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                @click="randomizeDisplayName"
+                            >
                                 Randomize
                             </button>
                         </div>
                     </form>
-                    <p v-if="errorMessage" class="text-sm text-rose-300">{{ errorMessage }}</p>
-                    <div class="rounded-2xl border border-slate-800/60 bg-slate-900/70 p-4 text-xs text-slate-400">
+                    <p v-if="errorMessage" class="text-sm text-rose-300">
+                        {{ errorMessage }}
+                    </p>
+                    <div
+                        class="rounded-2xl border border-slate-800/60 bg-slate-900/70 p-4 text-xs text-slate-400"
+                    >
                         <p>
-                            Change the display name or room and click <strong class="text-slate-200">Apply</strong> to
-                            reconnect the portable widget below. The component handles reconnections automatically when its props
+                            Change the display name or room and click
+                            <strong class="text-slate-200">Apply</strong> to
+                            reconnect the portable widget below. The component
+                            handles reconnections automatically when its props
                             change.
                         </p>
                     </div>
@@ -162,7 +200,9 @@ export default {
     font-weight: 600;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .btn:hover:not(:disabled) {
