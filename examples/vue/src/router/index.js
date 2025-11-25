@@ -7,14 +7,16 @@ Vue.use(Router)
 export default new Router({
     mode: 'hash',
     routes: [
+        
         {
             path: '/',
-            redirect: { name: 'audiobridge' },
-        },
-        {
-            path: '/audiobridge',
             name: 'audiobridge',
             component: AudioBridge,
+        },
+        {
+            path: '/portable',
+            name: 'portable',
+            component: () => import('../views/portableDemo.vue'),
         },
     ],
 })
