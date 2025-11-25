@@ -1,32 +1,23 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png" />
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div id="app" class="min-h-screen bg-slate-950 text-slate-100">
+        <router-view />
     </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
     name: 'App',
-    components: {
-        HelloWorld,
-    },
-    mounted() {
-        this.$janus.init()
-        this.$janus.createSession()
-    },
 }
 </script>
 
 <style>
+html,
+body {
+    min-height: 100vh;
+}
+
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
 }
 </style>
