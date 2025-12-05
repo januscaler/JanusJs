@@ -1,7 +1,36 @@
 import { JanusJs } from 'typed_janus_js'
 
-export const createJanusConnection = async ({ server, debug = false }) => {
-    const janus = new JanusJs({ server })
+export const createJanusConnection = async ({
+    server,
+    debug = false,
+    iceServers,
+    token,
+    apisecret,
+    apiSecret,
+    protocol,
+}) => {
+    if (!server) {
+        throw new Error('Janus server URL is required')
+    }
+    const janusOptions = {
+        server,
+    }
+    if (iceServers) {
+        janusOptions.iceServers = iceServers
+    }
+    if (token) {
+        janusOptions.token = token
+    }
+    if (apisecret) {
+        janusOptions.apisecret = apisecret
+    }
+    if (apiSecret) {
+        janusOptions.apiSecret = apiSecret
+    }
+    if (protocol) {
+        janusOptions.protocol = protocol
+    }
+    const janus = new JanusJs(janusOptions)
     await janus.init({ debug })
     const session = await janus.createSession()
     return { janus, session }

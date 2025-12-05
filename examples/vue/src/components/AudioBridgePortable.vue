@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { JanusAudioBridgePlugin } from 'typed_janus_js'
+import { JanusAudioBridgePlugin,JanusJs } from 'typed_janus_js'
 const createJanusConnection = async ({ server, debug = false }) => {
     const janus = new JanusJs({ server })
     await janus.init({ debug })
